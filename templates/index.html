@@ -1,5 +1,9 @@
 {% extends "base/layout.html" %}
 
 {% block content %}
-<h1>Home</h1>
+  <h1>Home</h1>
+  {% from "_macro.html" import render_field %}
+  <form>
+    {{ render_field(form.username) }}
+  </form>
 {% endblock %}
