@@ -4,3 +4,15 @@
   <h3> {{ value }} </h3>
   <h4> {{ value }} </h4>
 {% endmacro %}
+
+{% macro render_field(field) %}
+  <td> {{ field.label }}
+  <dd> {{ field(**kwargs)|safe }} <!-- kwargs (diccionario de argumentos), |safe mostrar como HTML-->
+  <!-- {% if field.errors %}
+    <ul>
+      {% for error in field.errors %}
+        <li> {{ error }} </li>
+      {% endfor %}
+    </ul>
+  {% endif %}   -->
+{% endmacro %}
