@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, make_response
 from flask_wtf import CSRFProtect
 import forms
 
@@ -8,6 +8,8 @@ csrf = CSRFProtect(app)
 
 @app.route('/', methods = ['GET', 'POST'])
 def home():
+    custom_cookie = request.cookies.get('custom_cookie', 'Undefined') #Si la cookie no existe, devolverá "Undefined"
+    print(custom_cookie)
     comment_form = forms.CommentForm(request.form)
     if request.method == 'POST' and comment_form.validate():
         print(comment_form.username.data)
@@ -26,6 +28,12 @@ def user(name='Juan'): #Va a recoger el valor del string entre los diamantes, en
     age = 32
     my_list = ['Estrella','Leffe','Grimbergen','Paulaner']
     return render_template('user.html', nombre=name, edad=age, list=my_list)#Va a devolver el template indicado, junto con el valor del segundo parámetro
+
+@app.route('/cookie')
+def cookie:
+    response = make_response(render_template('cookie.html'))
+    response.set_cookie('custom_cookie','The cookie')
+    return response
 
 @app.route('/json', methods = ['GET', 'POST'])
 def json():
